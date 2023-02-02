@@ -24,4 +24,14 @@ create an environment
 
 conda create -p venv python==3.7 -y
 
-conda activate 
+conda activate venv/
+
+create dockers 
+
+create requirement file
+
+pip install -r requirements.txt
+
+create setup file
+
+python install setup.py
