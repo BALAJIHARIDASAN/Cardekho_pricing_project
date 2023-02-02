@@ -3,7 +3,7 @@ training_pipeline_config:
   artifact_dir: artifact
 
 data_ingestion_config:
-  dataset_download_url: https://github.com/BALAJIHARIDASAN/Housing_power_consumption_project/blob/main/dataset/household_power_consumption.zip
+  dataset_download_url: r"C:\Users\91822\Desktop\ineuron\dataset\household_power_consumption.csv"
   raw_data_dir: raw_data
   tgz_download_dir: tgz_data
   ingested_dir: ingested_data

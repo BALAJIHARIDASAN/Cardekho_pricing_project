@@ -3,7 +3,7 @@
 from housing.entity.config_entity import *
 from housing.utils.util import read_yaml_file
 from housing.constant import *
-#from housing.logger import logging
+from housing.logger import logging
 from housing.Exception import HousingException
 import sys
 
@@ -26,9 +26,53 @@ class Configuration:
             raise HousingException(e,sys) from e
 
 
-    def get_data_ingestion_config(self):
+    def get_data_ingestion_config(self) ->DataIngestionConfig:
+
+        '''Description : This function helps to create the necessary path for the data ingestion configuration'''
         try:
-            pass
+            artifact_dir = self.training_pipeline_config.artifact_dir
+            data_ingestion_artifact_dir=os.path.join(
+                artifact_dir,
+                DATA_INGESTION_ARTIFACT_DIR,
+                self.time_stamp
+            )  # this line creates the artifact folder
+
+
+            data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
+            
+            dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
+            tgz_download_dir = os.path.join(
+                data_ingestion_artifact_dir,
+                data_ingestion_info[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY]
+            )  # this line gets the url for the dataset download
+
+            raw_data_dir = os.path.join(data_ingestion_artifact_dir,
+            data_ingestion_info[DATA_INGESTION_RAW_DATA_DIR_KEY]
+            )  # this line create the directory for dataset download 
+
+            ingested_data_dir = os.path.join(
+                data_ingestion_artifact_dir,
+                data_ingestion_info[DATA_INGESTION_INGESTED_DIR_NAME_KEY]
+            ) # this line create the ingested downloaded folder for train and test folder
+            ingested_train_dir = os.path.join(
+                ingested_data_dir,
+                data_ingestion_info[DATA_INGESTION_TRAIN_DIR_KEY]
+            ) # this line create the train folder
+            ingested_test_dir =os.path.join(
+                ingested_data_dir,
+                data_ingestion_info[DATA_INGESTION_TEST_DIR_KEY]
+            )  # this line creates the test folder
+
+
+            data_ingestion_config=DataIngestionConfig(
+                dataset_download_url=dataset_download_url, 
+                tgz_download_dir=tgz_download_dir, 
+                raw_data_dir=raw_data_dir, 
+                ingested_train_dir=ingested_train_dir, 
+                ingested_test_dir=ingested_test_dir
+            )
+            logging.info(f"Data Ingestion config: {data_ingestion_config}")
+            return data_ingestion_config
         except Exception as e:
             raise HousingException(e,sys) from e   
 
