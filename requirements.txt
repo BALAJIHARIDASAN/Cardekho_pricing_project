@@ -8,6 +8,6 @@ evidently
 dill
 pytest
 matplotlib
-yaml
+
 
 -e .

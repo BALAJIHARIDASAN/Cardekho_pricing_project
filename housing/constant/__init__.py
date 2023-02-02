@@ -20,3 +20,7 @@ def get_current_time_stamp():
 
 CURRENT_TIME_STAMP = get_current_time_stamp()
 
+# Training pipeline related variable
+TRAINING_PIPELINE_CONFIG_KEY = "training_pipeline_config"
+TRAINING_PIPELINE_ARTIFACT_DIR_KEY = "artifact_dir"
+TRAINING_PIPELINE_NAME_KEY = "pipeline_name"
