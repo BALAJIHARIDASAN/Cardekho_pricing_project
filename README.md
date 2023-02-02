@@ -6,17 +6,17 @@ Housing_power_consumption_project
 
 
 
-Context: Measurements of electric power consumption in one household with a one-minute sampling rate over a period of almost 4 years. Different electrical quantities and some sub-metering values are available.
+**Context:** Measurements of electric power consumption in one household with a one-minute sampling rate over a period of almost 4 years. Different electrical quantities and some sub-metering values are available.
 
-Data Set Characteristics:
+**Data Set Characteristics:**
 
 Multivariate, Time-Series
 
-Associated Tasks:
+**Associated Tasks:**
 
 Regression, Clustering
 
-Data Set Information:
+**Data Set Information:**
 
 This archive contains 2075259 measurements gathered between December 2006 and November 2010 (47 months).
 Notes:
@@ -25,25 +25,25 @@ Notes:
 
 2.The dataset contains some missing values in the measurements (nearly 1,25% of the rows). All calendar timestamps are present in the dataset but for some timestamps, the measurement values are missing: a missing value is represented by the absence of value between two consecutive semi-colon attribute separators. For instance, the dataset shows missing values on April 28, 2007.
 
-Attribute Information:
+**Attribute Information:**
 
-1.date: Date in format dd/mm/yyyy
+1.**date:** Date in format dd/mm/yyyy
 
-2.time: time in format hh:mm:ss
+2.**time:** time in format hh:mm:ss
 
-3.global_active_power: household global minute-averaged active power (in kilowatt)
+3.**global_active_power:** household global minute-averaged active power (in kilowatt)
 
-4.global_reactive_power: household global minute-averaged reactive power (in kilowatt)
+4.**global_reactive_power:** household global minute-averaged reactive power (in kilowatt)
 
-5.voltage: minute-averaged voltage (in volt)
+5.**voltage:** minute-averaged voltage (in volt)
 
-6.global_intensity: household global minute-averaged current intensity (in ampere)
+6.**global_intensity:** household global minute-averaged current intensity (in ampere)
 
-7.sub_metering_1: energy sub-metering No. 1 (in watt-hour of active energy). It corresponds to the kitchen, containing mainly a dishwasher, an oven and a microwave (hot plates are not electric but gas powered).
+7.**sub_metering_1:** energy sub-metering No. 1 (in watt-hour of active energy). It corresponds to the kitchen, containing mainly a dishwasher, an oven and a microwave (hot plates are not electric but gas powered).
 
-8.sub_metering_2: energy sub-metering No. 2 (in watt-hour of active energy). It corresponds to the laundry room, containing a washing-machine, a tumble-drier, a refrigerator and a light.
+8.**sub_metering_2:** energy sub-metering No. 2 (in watt-hour of active energy). It corresponds to the laundry room, containing a washing-machine, a tumble-drier, a refrigerator and a light.
 
-9.sub_metering_3: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.
+9.**sub_metering_3:** energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.
 
 
 
