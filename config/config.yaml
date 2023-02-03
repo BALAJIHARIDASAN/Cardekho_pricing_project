@@ -1,12 +1,12 @@
 training_pipeline_config:
-  pipeline_name: housing    # name of the pipeline
+  pipeline_name: Car    # name of the pipeline
   artifact_dir: artifact    # folder to store the all the information about the artifact
 
 
 
 #data ingestion 
 data_ingestion_config:  # folder location 
-  dataset_download_url: C:\Users\91822\Desktop\git_hub\Housing_power_consumption_project\dataset\car_dekho.zip  # url detail
+  dataset_download_url: C:\Users\91822\Desktop\git_hub\Cardekho_pricing_project\dataset\car_dekho.zip # url detail
   raw_data_dir: raw_data 
   tgz_download_dir: tgz_data
   ingested_dir: ingested_data

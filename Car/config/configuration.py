@@ -3,8 +3,8 @@ from Car.entity.config_entity import DataIngestionConfig,TrainingPipelineConfig
 from Car.util.util import read_yaml_file
 from Car.logger import logging
 import sys,os
-from housing.constant import *
-from housing.exception import HousingException
+from Car.constant import *
+from Car.exception import CarException
 
 
 # If we call these function we will get the entity from the config_entity
@@ -20,7 +20,7 @@ class Configuration:
             self.training_pipeline_config = self.get_training_pipeline_config()  # this will get the path of the training pipeline
             self.time_stamp = current_time_stamp   # current time stamp
         except Exception as e:
-            raise HousingException(e,sys) from e
+            raise CarException(e,sys) from e
 
 
 
@@ -75,7 +75,7 @@ class Configuration:
             logging.info(f"Data Ingestion config: {data_ingestion_config}")
             return data_ingestion_config
         except Exception as e:
-            raise HousingException(e,sys) from e
+            raise CarException(e,sys) from e
 
 
     def get_training_pipeline_config(self) :
@@ -90,4 +90,4 @@ class Configuration:
             logging.info(f"Training pipleine config: {training_pipeline_config}")
             return training_pipeline_config 
         except Exception as e:
-            raise HousingException(e,sys) from e
+            raise CarException(e,sys) from e
