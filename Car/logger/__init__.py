@@ -2,9 +2,9 @@
 import logging
 from datetime import datetime
 import os
-from housing.constant import *
+from Car.constant import *
 
-LOG_DIR = 'housing_logs'
+LOG_DIR = 'Car_logs'
 
 
 CURRENT_TIME_STAMP = f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}"
