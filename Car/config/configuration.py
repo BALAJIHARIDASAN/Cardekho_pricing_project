@@ -1,7 +1,7 @@
 
-from housing.entity.config_entity import DataIngestionConfig,TrainingPipelineConfig
-from housing.util.util import read_yaml_file
-from housing.logger import logging
+from Car.entity.config_entity import DataIngestionConfig,TrainingPipelineConfig
+from Car.util.util import read_yaml_file
+from Car.logger import logging
 import sys,os
 from housing.constant import *
 from housing.exception import HousingException
@@ -26,13 +26,7 @@ class Configuration:
 
 # data ingestion configuration
     def get_data_ingestion_config(self) ->DataIngestionConfig:
-        '''This function will give path output as 
-        DataIngestionConfig(dataset_download_url='https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housing/housing.tgz', 
-        tgz_download_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\tgz_data', 
-        raw_data_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\raw_data', 
-        ingested_train_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\ingested_data\\train', 
-        ingested_test_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\ingested_data\\test')
-         '''
+        
         try:
             artifact_dir = self.training_pipeline_config.artifact_dir  # this wil get the path of the aritifact dir
             data_ingestion_artifact_dir=os.path.join(
@@ -84,12 +78,7 @@ class Configuration:
             raise HousingException(e,sys) from e
 
 
-    def get_training_pipeline_config(self) ->TrainingPipelineConfig:
-
-        ''''this function will return a  path like'
-        
-        TrainingPipelineConfig(artifact_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact')
-         '''
+    def get_training_pipeline_config(self) :
         try:
             training_pipeline_config = self.config_info[TRAINING_PIPELINE_CONFIG_KEY]  # this line will get the path of the yaml file contains details about the pipline
             artifact_dir = os.path.join(ROOT_DIR,

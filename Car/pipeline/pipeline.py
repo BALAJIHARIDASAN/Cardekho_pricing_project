@@ -1,9 +1,9 @@
-from housing.config.configuration import *
-from housing.logger import logging
-from housing.exception import HousingException
-from housing.component.data_ingestion import *
-from housing.entity.artifact_entity import *
-from housing.entity.config_entity import *
+from Car.config.configuration import *
+from Car.logger import logging
+from Car.exception import HousingException
+from Car.component.data_ingestion import *
+from Car.entity.artifact_entity import *
+from Car.entity.config_entity import *
 import sys,os
 
 

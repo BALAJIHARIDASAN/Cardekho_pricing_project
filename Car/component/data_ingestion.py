@@ -7,12 +7,13 @@
 
 
 
-from housing.entity.config_entity import DataIngestionConfig
+from Car.entity.config_entity import DataIngestionConfig
 import sys,os
-from housing.exception import HousingException
-from housing.logger import logging
-from housing.entity.artifact_entity import DataIngestionArtifact
+from Car.exception import HousingException
+from Car.logger import logging
+from Car.entity.artifact_entity import DataIngestionArtifact
 import tarfile
+from zipfile import ZipFile
 import numpy as np
 from six.moves import urllib
 import pandas as pd
@@ -40,16 +41,10 @@ class DataIngestion:
             tgz_download_dir = self.data_ingestion_config.tgz_download_dir
             
             os.makedirs(tgz_download_dir,exist_ok=True)  # create the folder  for downloading dataset
+            
+            tgz_file_path = r'C:\Users\91822\Desktop\git_hub\Housing_power_consumption_project\dataset\car_dekho.zip'
 
-            housing_file_name = os.path.basename(download_url)  # extract only the housing.tgz from the url where the dataset is present
-
-            tgz_file_path = os.path.join(tgz_download_dir, housing_file_name) # create a folder with file of url file
-
-            logging.info(f"Downloading file from :[{download_url}] into :[{tgz_file_path}]")
-            urllib.request.urlretrieve(download_url, tgz_file_path)   # to read  and download the data from the url 
-            logging.info(f"File :[{tgz_file_path}] has been downloaded successfully.")
-            return tgz_file_path  # location of the dataset to be downloaded
-
+            return tgz_file_path  
         except Exception as e:
             raise HousingException(e,sys) from e
 
@@ -64,7 +59,7 @@ class DataIngestion:
             os.makedirs(raw_data_dir,exist_ok=True)  # to create the folder raw data dir to save the dataset
 
             logging.info(f"Extracting tgz file: [{tgz_file_path}] into dir: [{raw_data_dir}]")
-            with tarfile.open(tgz_file_path) as housing_tgz_file_obj:
+            with ZipFile(tgz_file_path,'r') as housing_tgz_file_obj:
                 housing_tgz_file_obj.extractall(path=raw_data_dir) # extract the raw data dir
             logging.info(f"Extraction completed")
 
@@ -85,8 +80,8 @@ class DataIngestion:
             logging.info(f"Reading csv file: [{housing_file_path}]")
             housing_data_frame = pd.read_csv(housing_file_path)  # reading the extracted file
 
-            housing_data_frame["selling_price"] = pd.cut(
-                housing_data_frame["median_price"],
+            housing_data_frame["selling_cat"] = pd.cut(
+                housing_data_frame["selling_price"],
                 bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
                 labels=[1,2,3,4,5]
             )  # distribution of the median income
@@ -98,9 +93,9 @@ class DataIngestion:
 
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=121)  # spliting the dataset
 
-            for train_index,test_index in split.split(housing_data_frame, housing_data_frame["selling_price"]): # ration that split happens will always have same proportion
-                strat_train_set = housing_data_frame.loc[train_index].drop(["selling_price"],axis=1)  # extract the row wise data using values
-                strat_test_set = housing_data_frame.loc[test_index].drop(["selling_price"],axis=1)  # extract the row wise data using values
+            for train_index,test_index in split.split(housing_data_frame, housing_data_frame["selling_cat"]): # ration that split happens will always have same proportion
+                strat_train_set = housing_data_frame.loc[train_index].drop(["selling_cat"],axis=1)  # extract the row wise data using values
+                strat_test_set = housing_data_frame.loc[test_index].drop(["selling_cat"],axis=1)  # extract the row wise data using values
   
             train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,
                                             file_name)  # creating the directory for the train data

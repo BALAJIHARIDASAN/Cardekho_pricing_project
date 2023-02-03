@@ -1,4 +1,4 @@
-from housing.pipeline.pipeline import Pipeline
+from Car.pipeline.pipeline import Pipeline
 
 
 def main():
