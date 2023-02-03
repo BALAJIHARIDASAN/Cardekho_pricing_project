@@ -1,0 +1,40 @@
+
+columns:
+'Unnamed: 0': int64
+'car_name': object
+'brand': object
+'model': object
+'vehicle_age': int64
+'km_driven': int64
+'seller_type': object
+'fuel_type': object
+'transmission_type': object
+'mileage': float64
+'engine': int64
+'max_power': float64
+'seats': int64
+'selling_price': int64
+
+
+numerical_columns:
+
+  -Unnamed:0
+  -vehicle_age
+  -km_driven
+  -mileage
+  -engine
+  -max_power
+  -seats
+  -selling_price
+
+
+categorical_columns:
+  -car_name 
+  -brand
+  -model
+  -seller_type
+  -fuel_type
+  -transmission_type
+
+
+target_column: selling_price
