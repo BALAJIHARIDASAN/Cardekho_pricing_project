@@ -1,10 +1,13 @@
 training_pipeline_config:
-  pipeline_name: housing
-  artifact_dir: artifact
+  pipeline_name: housing    # name of the pipeline
+  artifact_dir: artifact    # folder to store the all the information about the artifact
 
-data_ingestion_config:
-  dataset_download_url: r"C:\Users\91822\Desktop\ineuron\dataset\household_power_consumption.csv"
-  raw_data_dir: raw_data
+
+
+#data ingestion 
+data_ingestion_config:  # folder location 
+  dataset_download_url: C:\Users\91822\Desktop\git_hub\Housing_power_consumption_project\dataset\car_dekho.tgz  # url detail
+  raw_data_dir: raw_data 
   tgz_download_dir: tgz_data
   ingested_dir: ingested_data
   ingested_train_dir: train
@@ -12,13 +15,15 @@ data_ingestion_config:
 
 
 
-
-data_validation_config:
-  schema_dir: config
-  schema_file_name: schema.yaml
+# data validation
+data_validation_config:   # path for the data validation
+  schema_dir: config  # schema directory
+  schema_file_name: schema.yaml  # schema file name
   report_file_name: report.json
   report_page_file_name: report.html
 
+
+# data transfomation
 data_transformation_config:
   add_bedroom_per_room: true
   transformed_dir: transformed_data
@@ -26,7 +31,9 @@ data_transformation_config:
   transformed_test_dir: test
   preprocessing_dir: preprocessed
   preprocessed_object_file_name: preprocessed.pkl
-  
+
+
+# model tranier
 model_trainer_config:
   trained_model_dir: trained_model
   model_file_name: model.pkl
@@ -35,9 +42,13 @@ model_trainer_config:
   model_config_file_name: model.yaml
 
 
+
+#model evaluation
 model_evaluation_config:
   model_evaluation_file_name: model_evaluation.yaml
   
 
+
+# model pusher
 model_pusher_config:
   model_export_dir: saved_models

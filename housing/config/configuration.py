@@ -1,67 +1,74 @@
 
-
-from housing.entity.config_entity import *
-from housing.utils.util import read_yaml_file
-from housing.constant import *
+from housing.entity.config_entity import DataIngestionConfig,TrainingPipelineConfig
+from housing.util.util import read_yaml_file
 from housing.logger import logging
-from housing.Exception import HousingException
-import sys
+import sys,os
+from housing.constant import *
+from housing.exception import HousingException
 
 
-
-
-
-
+# If we call these function we will get the entity from the config_entity
 
 class Configuration:
 
-
-    def __init__(self,config_file_path = CONFIG_FILE_PATH,current_time_stamp:str= CURRENT_TIME_STAMP):
-        
+    def __init__(self,
+        config_file_path:str =CONFIG_FILE_PATH,
+        current_time_stamp:str = CURRENT_TIME_STAMP 
+        ) -> None:
         try:
-            self.config_info  = read_yaml_file(file_path=config_file_path)
-            self.training_pipeline_config = self.get_training_pipeline_config()
-            self.time_stamp = current_time_stamp
+            self.config_info  = read_yaml_file(file_path=config_file_path) # this line will get the read data  from to the yaml file
+            self.training_pipeline_config = self.get_training_pipeline_config()  # this will get the path of the training pipeline
+            self.time_stamp = current_time_stamp   # current time stamp
         except Exception as e:
             raise HousingException(e,sys) from e
 
 
-    def get_data_ingestion_config(self) ->DataIngestionConfig:
 
-        '''Description : This function helps to create the necessary path for the data ingestion configuration'''
+# data ingestion configuration
+    def get_data_ingestion_config(self) ->DataIngestionConfig:
+        '''This function will give path output as 
+        DataIngestionConfig(dataset_download_url='https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housing/housing.tgz', 
+        tgz_download_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\tgz_data', 
+        raw_data_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\raw_data', 
+        ingested_train_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\ingested_data\\train', 
+        ingested_test_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\2023-01-19-13-57-21\\ingested_data\\test')
+         '''
         try:
-            artifact_dir = self.training_pipeline_config.artifact_dir
+            artifact_dir = self.training_pipeline_config.artifact_dir  # this wil get the path of the aritifact dir
             data_ingestion_artifact_dir=os.path.join(
                 artifact_dir,
                 DATA_INGESTION_ARTIFACT_DIR,
                 self.time_stamp
-            )  # this line creates the artifact folder
-
-
-            data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
+            ) # this line will get the complete path of the yaml file
+            data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]   # this will get the path of the yaml file
             
-            dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
+            dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]  # this will get the url from the yaml file
+
             tgz_download_dir = os.path.join(
                 data_ingestion_artifact_dir,
                 data_ingestion_info[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY]
-            )  # this line gets the url for the dataset download
+            ) # 'c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\tgz_data'
 
             raw_data_dir = os.path.join(data_ingestion_artifact_dir,
             data_ingestion_info[DATA_INGESTION_RAW_DATA_DIR_KEY]
-            )  # this line create the directory for dataset download 
+            )  # 'c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\raw_data'
 
             ingested_data_dir = os.path.join(
                 data_ingestion_artifact_dir,
                 data_ingestion_info[DATA_INGESTION_INGESTED_DIR_NAME_KEY]
-            ) # this line create the ingested downloaded folder for train and test folder
+            ) # 'c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\ingested_data'
+
+
             ingested_train_dir = os.path.join(
                 ingested_data_dir,
                 data_ingestion_info[DATA_INGESTION_TRAIN_DIR_KEY]
-            ) # this line create the train folder
+            )  # 'c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\ingested_data\\train'
+
+
             ingested_test_dir =os.path.join(
                 ingested_data_dir,
                 data_ingestion_info[DATA_INGESTION_TEST_DIR_KEY]
-            )  # this line creates the test folder
+            )   # 'c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact\\data_ingestion\\ingested_data\\test'
 
 
             data_ingestion_config=DataIngestionConfig(
@@ -74,19 +81,24 @@ class Configuration:
             logging.info(f"Data Ingestion config: {data_ingestion_config}")
             return data_ingestion_config
         except Exception as e:
-            raise HousingException(e,sys) from e   
+            raise HousingException(e,sys) from e
 
 
     def get_training_pipeline_config(self) ->TrainingPipelineConfig:
-        '''This function try to get the path of the artifact dir from the config yaml file'''
+
+        ''''this function will return a  path like'
+        
+        TrainingPipelineConfig(artifact_dir='c:\\Users\\91822\\Desktop\\git_hub\\Machine-Learning-project-end-to-end\\housing\\artifact')
+         '''
         try:
-            training_pipeline_config = self.config_info[TRAINING_PIPELINE_CONFIG_KEY]
+            training_pipeline_config = self.config_info[TRAINING_PIPELINE_CONFIG_KEY]  # this line will get the path of the yaml file contains details about the pipline
             artifact_dir = os.path.join(ROOT_DIR,
             training_pipeline_config[TRAINING_PIPELINE_NAME_KEY],
             training_pipeline_config[TRAINING_PIPELINE_ARTIFACT_DIR_KEY]
-            )
+            )  # this line will get the path of the aritifact in the config.yaml file
 
-            training_pipeline_config = TrainingPipelineConfig(artifact_dir=artifact_dir)
-            return training_pipeline_config
+            training_pipeline_config = TrainingPipelineConfig(artifact_dir=artifact_dir) # this the function that return in the config_entity file that hepls to generate an object
+            logging.info(f"Training pipleine config: {training_pipeline_config}")
+            return training_pipeline_config 
         except Exception as e:
             raise HousingException(e,sys) from e
